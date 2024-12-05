@@ -1,0 +1,24 @@
+// models/task.js
+const { ObjectId } = require('mongodb');
+
+const taskSchema = {
+  _id: ObjectId,          // MongoDB ObjectId for task
+  name: String,           // Name of the task
+  description: String,    // Description of the task (optional)
+  status: {               // Task status
+    type: String,
+    enum: ['to-do', 'in-progress', 'done'], // Possible task statuses
+    default: 'to-do',
+  },
+  createdDate: Date,      // Created date (date task created)
+  startDate: Date,        // Start date (if the task is in-progress)
+  dueDate: Date,         // Due date
+  doneDate: Date,         // Done date (if the task is completed)
+  projectId: {            // Reference to a project
+    type: ObjectId,
+    ref: 'Project',       // Reference to Project collection
+    default: null,        // Task can exist without a project
+  },
+};
+
+module.exports = taskSchema;

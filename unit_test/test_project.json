@@ -1,0 +1,167 @@
+{
+    "info": {
+        "name": "Project Management API",
+        "description": "Postman collection for testing the Project Management API endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Project",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Sample Project\",\n    \"description\": \"This is a sample project description.\",\n    \"startDate\": \"2024-12-01T00:00:00.000Z\",\n    \"dueDate\": \"2024-12-31T00:00:00.000Z\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/projects",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "projects"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "List All Projects",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/projects",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "projects"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Update Project",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"name\": \"Updated Project\",\n    \"description\": \"Updated description.\",\n    \"startDate\": \"2024-12-02T00:00:00.000Z\",\n    \"dueDate\": \"2025-01-01T00:00:00.000Z\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3000/projects/:id",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "projects",
+                        ":id"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Delete Project",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:3000/projects/:id",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "projects",
+                        ":id"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Assign Task to Project",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:3000/projects/:projectId/tasks/:taskId",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "projects",
+                        ":projectId",
+                        "tasks",
+                        ":taskId"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Filter Tasks by Project Name",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/projects/filterTasks?projectName=Sample Project",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "projects",
+                        "filterTasks"
+                    ],
+                    "query": [
+                        {
+                            "key": "projectName",
+                            "value": "Sample Project"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Sort Projects by Date",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:3000/projects/sort?field=startDate",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                        "projects",
+                        "sort"
+                    ],
+                    "query": [
+                        {
+                            "key": "field",
+                            "value": "startDate"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
