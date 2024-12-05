@@ -1,14 +1,13 @@
 {
 	"info": {
-		"_postman_id": "78efba13-a986-4891-818a-29c9662f1bc3",
-		"name": "Project Management API",
-		"description": "Postman collection for testing the Project Management API endpoints",
+		"_postman_id": "0fbf717e-7a61-44c6-8908-5b4a1b18ee71",
+		"name": "To-Do List API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "34872167"
 	},
 	"item": [
 		{
-			"name": "Create Project",
+			"name": "Create Task",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -19,43 +18,43 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Today Sample Project X\",\n    \"description\": \"This is a sample project X description.\",\n    \"startDate\": \"2024-12-01T00:00:00.000Z\",\n    \"dueDate\": \"2024-12-05T00:00:00.000Z\"\n}"
+					"raw": "{\n    \"name\": \"NEW 2 Update OS 8\",\n    \"description\": \"This is task 10\",\n    \"status\":\"to-do\",\n    \"startDate\": \"2024-12-07T00:00:00Z\",\n    \"dueDate\": \"2024-12-23T00:00:00Z\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3000/projects",
+					"raw": "http://localhost:3000/tasks",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"projects"
+						"tasks"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "List All Projects",
+			"name": "Get All Tasks",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/projects",
+					"raw": "http://localhost:3000/tasks",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"projects"
+						"tasks"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Update Project",
+			"name": "Update Task",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -66,85 +65,63 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Updated Project\",\n    \"description\": \"Updated description.\",\n    \"startDate\": \"2024-12-02T00:00:00.000Z\",\n    \"dueDate\": \"2025-01-01T00:00:00.000Z\"\n}"
+					"raw": "{\n    \"name\": \"Updated Task 1\",\n    \"description\": \"Updated description\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3000/projects/6751bc93489c7ac44f58f4a1",
+					"raw": "http://localhost:3000/tasks/6751a90d489c7ac44f58f49e",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"projects",
-						"6751bc93489c7ac44f58f4a1"
+						"tasks",
+						"6751a90d489c7ac44f58f49e"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Delete Project",
+			"name": "Delete Task",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/projects/6751f62a64d475e3153a59ca",
+					"raw": "http://localhost:3000/tasks/6751aa7a489c7ac44f58f49f",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"projects",
-						"6751f62a64d475e3153a59ca"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Assign Task to Project",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/projects/6751bc93489c7ac44f58f4a1/tasks/6751a84f489c7ac44f58f49c",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"projects",
-						"6751bc93489c7ac44f58f4a1",
 						"tasks",
-						"6751a84f489c7ac44f58f49c"
+						"6751aa7a489c7ac44f58f49f"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Filter Tasks by Project Name",
+			"name": "Filter Tasks by Status",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/projects/filterTasks?projectName=Updated Project",
+					"raw": "http://localhost:3000/tasks/filter?status=done",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"projects",
-						"filterTasks"
+						"tasks",
+						"filter"
 					],
 					"query": [
 						{
-							"key": "projectName",
-							"value": "Updated Project"
+							"key": "status",
+							"value": "done"
 						}
 					]
 				}
@@ -152,19 +129,45 @@
 			"response": []
 		},
 		{
-			"name": "Sort Projects by Date",
+			"name": "Search Tasks by Name",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/projects/sort?field=startDate",
+					"raw": "http://localhost:3000/tasks/search?name=Task",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"projects",
+						"tasks",
+						"search"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Task"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sort Tasks by Start Date",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/tasks/sort?field=startDate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks",
 						"sort"
 					],
 					"query": [
@@ -178,21 +181,33 @@
 			"response": []
 		},
 		{
-			"name": "Project With Task",
+			"name": "Task With Project",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/tasks/taskWithProject",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"tasks",
+						"taskWithProject"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Move Task From One Project to the Other",
+			"name": "Change Status",
 			"request": {
-				"method": "POST",
+				"method": "PATCH",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"taskId\": \"64abcdef1234567890abcdef\",\r\n  \"fromProjectId\": \"64abc1234567890defabcdef\",\r\n  \"toProjectId\": \"64def1234567890abcabcdef\"\r\n}",
+					"raw": "{\r\n  \"taskId\": \"6751e6f85b680dcd434ec7e3\",\r\n  \"newStatus\": \"to-do\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -200,15 +215,15 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/projects/moveTask",
+					"raw": "http://localhost:3000/tasks/changeStatus",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"projects",
-						"moveTask"
+						"tasks",
+						"changeStatus"
 					]
 				}
 			},
