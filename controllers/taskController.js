@@ -11,9 +11,9 @@ const taskModel = require('../models/task'); // Import the task model
 exports.createTask = async (req, res) => {
     const { name, description, status, startDate, dueDate, doneDate, projectId } = req.body;
 
-    // Validation check for status field
-    if (!status) {
-        return res.status(400).json({ error: 'Task status is required' });
+    // Validate if 'fields' is provided in the request body
+    if (!status || !name || !description || !startDate || !dueDate) {
+        return res.status(400).json({ error: 'The fields status, name, description, startDate, dueDate are required' });
     }
 
     // Ensure the status is one of the valid values: 'to-do', 'in-progress', 'done'
@@ -71,11 +71,11 @@ exports.updateTask = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
 
-    // Validate if 'status' is provided in the request body
-    if (!updates.status) {
-        return res.status(400).json({ error: 'Status is required to update the task' });
+    // Validate if 'fields' is provided in the request body
+    if (!updates.status || !updates.name || !updates.description || !updates.startDate || !updates.dueDate) {
+        return res.status(400).json({ error: 'The fields status, name, description, startDate, dueDate are required' });
     }
-
+    
     // Validate that the status is one of the accepted values ('to-do', 'in-progress', or 'done')
     const validStatuses = ['to-do', 'in-progress', 'done'];
     if (!validStatuses.includes(updates.status)) {
@@ -105,6 +105,10 @@ exports.updateTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   const { id } = req.params;
 
+  if (!id) {
+    return res.status(400).json({ error: 'The id field is required' });
+  }
+
   try {
     const db = await connectToDatabase();
     const result = await db.collection('tasks').deleteOne({ _id: new ObjectId(id) });
@@ -118,43 +122,16 @@ exports.deleteTask = async (req, res) => {
 };
 
 /**
- * Mark a task as to-do or done by updating its status.
- * @param {Object} req - Express request object.
- * @param {Object} res - Express response object.
- */
-exports.markTaskStatus = async (req, res) => {
-  const { id } = req.params;
-  const { status } = req.body;
-
-  // Validate status input
-  if (!['to-do', 'done'].includes(status)) {
-    return res.status(400).json({ error: 'Invalid status' });
-  }
-
-  const updates = { status, doneDate: status === 'done' ? new Date().toISOString() : null };
-
-  try {
-    const db = await connectToDatabase();
-    const result = await db.collection('tasks').updateOne(
-      { _id: ObjectId.createFromHexString(id) },
-      { $set: updates }
-    );
-    if (result.matchedCount === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
-    res.status(200).json({ message: 'Task status updated' });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to update task status' });
-  }
-};
-
-/**
  * Filter tasks by their status.
  * @param {Object} req - Express request object.
  * @param {Object} res - Express response object.
  */
 exports.filterTasksByStatus = async (req, res) => {
   const { status } = req.query;
+
+  if (!status) {
+    return res.status(400).json({ error: 'The status is required' });
+  }
 
   try {
     const db = await connectToDatabase();
@@ -256,7 +233,12 @@ exports.getTasksWithProjectsDueToday = async (req, res) => {
  */
 exports.changeTaskStatus = async (req, res) => {
     const { taskId, newStatus } = req.body;
-  
+
+    // Validate if 'fields' is provided in the request body
+    if (!taskId || !newStatus) {
+        return res.status(400).json({ error: 'The fields taskId, newStatus are required' });
+    }
+
     try {
       const db = await connectToDatabase();
   

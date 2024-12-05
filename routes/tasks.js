@@ -4,7 +4,6 @@ const {
   getAllTasks,
   updateTask,
   deleteTask,
-  markTaskStatus,
   filterTasksByStatus,
   searchTasksByName,
   sortTasksByDate,
@@ -19,7 +18,6 @@ router.post('/', createTask);
 router.get('/', getAllTasks);
 router.put('/:id', updateTask);
 router.delete('/:id', deleteTask);
-router.patch('/:id/status', markTaskStatus);
 router.get('/filter', filterTasksByStatus);
 router.get('/search', searchTasksByName);
 router.get('/sort', sortTasksByDate);

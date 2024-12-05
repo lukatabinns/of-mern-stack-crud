@@ -10,6 +10,11 @@ const projectModel = require('../models/project');
 exports.createProject = async (req, res) => {
     const { name, description, startDate, dueDate } = req.body;
 
+    // Validate if 'fields' is provided in the request body
+    if (!name || !description || !startDate || !dueDate) {
+        return res.status(400).json({ error: 'The fields name, description, startDate, dueDate are required' });
+    }
+
     try {
       const db = await connectToDatabase();
       const newProject = {
@@ -17,6 +22,7 @@ exports.createProject = async (req, res) => {
         description,
         startDate,
         dueDate,
+        createdAt: new Date(),
       };
   
       const result = await db.collection('projects').insertOne(newProject);
@@ -56,6 +62,10 @@ exports.updateProject = async (req, res) => {
   const { id } = req.params;
   const { name, description, startDate, dueDate } = req.body;
 
+  if (!name || !description || !startDate || !dueDate) {
+    return res.status(400).json({ error: 'The fields name, description, startDate, dueDate are required' });
+  }
+
   try {
     const db = await connectToDatabase();
     const result = await db.collection('projects').updateOne(
@@ -88,6 +98,10 @@ exports.updateProject = async (req, res) => {
  */
 exports.deleteProject = async (req, res) => {
   const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ error: 'The id field is required' });
+  }
 
   try {
     const db = await connectToDatabase();
@@ -124,6 +138,10 @@ exports.deleteProject = async (req, res) => {
  */
 exports.assignTaskToProject = async (req, res) => {
     const { taskId, projectId } = req.body;
+
+    if (!taskId || !projectId) {
+        return res.status(400).json({ error: 'The fields taskId, projectId are required' });
+    }
 
     try {
       const db = await connectToDatabase();
@@ -248,6 +266,10 @@ exports.getProjectsWithTasksDueToday = async (req, res) => {
  */
 exports.moveTaskToAnotherProject = async (req, res) => {
     const { taskId, fromProjectId, toProjectId } = req.body;
+
+    if (!taskId || !fromProjectId || !toProjectId) {
+        return res.status(400).json({ error: 'The fields taskId, fromProjectId, toProjectId are required' });
+    }
   
     try {
       const db = await connectToDatabase();
