@@ -34,6 +34,12 @@ exports.createTask = async (req, res) => {
         doneDate: status === 'done' ? new Date() : doneDate,
         projectId,
       };
+
+      // Check if a task with the same name already exists
+      const existingTask = await db.collection('tasks').findOne({ name });
+      if (existingTask) {
+        return res.status(400).json({ error: 'A task with this name already exists.' });
+      }
   
       const result = await db.collection('tasks').insertOne(newTask);
   

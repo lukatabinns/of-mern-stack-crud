@@ -17,6 +17,13 @@ exports.createProject = async (req, res) => {
 
     try {
       const db = await connectToDatabase();
+
+      // Check if a project with the same name already exists
+      const existingProject = await db.collection('projects').findOne({ name });
+      if (existingProject) {
+        return res.status(400).json({ error: 'A project with this name already exists.' });
+      }
+      
       const newProject = {
         name,
         description,
